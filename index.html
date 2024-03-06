@@ -23,14 +23,47 @@
 
     <!-- Our CSS -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 
   </head>
   <body>
-    <div id="map"></div>
+
+    <div class="container">
+
+
+        <!-- Dashboard Title -->
+        <div class="row">
+          <div class="col-md-12 p-5 text-center bg-light">
+            <h1>Life Expectancy by Country</h1>
+            <p>Data Visualization Project</p>
+          </div>
+        </div>
+
+
+        <!-- First Row of the Dashboard -->
+        <div class="row">
+          <div class="col-md-2">
+
+            <!-- Dropdown Selection     -->
+            <div class="card card-body bg-light">
+              <h6>Decade:</h6>
+              <select id="selDataset" onchange="optionChanged(this.value)"></select>
+            </div>
+
+          </div>
+          
+
+          <!-- World Map -->
+          <div class="col-md-5">
+            <div id="map"></div>
+          </div>
+
+        </div>
+
+      </div>
 
 
     <!-- JavaScript file -->
-    <!-- <script type="text/javascript" src="js/logic.js"></script> -->
     <script type="text/javascript" src="js/logic.js"></script>
 
 
