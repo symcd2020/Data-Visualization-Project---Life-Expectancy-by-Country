@@ -71,12 +71,23 @@ d3.json(geoData).then(function(data) {
   // Adding the legend to the map
   legend.addTo(myMap);
 
-  let selectDropdown = document.getElementById("selDataset");
+  let selectDecadeDropdown = document.getElementById("selDataset1");
 
   for (let decade = 1950; decade <= 2024; decade += 10) {
       let option = document.createElement("option");
       option.text = decade + "s";
       option.value = decade;
-      selectDropdown.add(option);
+      selectDecadeDropdown.add(option);
 }
+
+//   let selectGenderDropdown = document.getElementById("selDataset2");
+  
+//   let genders = ["Male", "Female", "Total"];
+//   genders.forEach(gender => {
+//     let option = document.createElement("option");
+//     option.text = gender;
+//     option.value = gender.toLowerCase();
+//     selectGenderDropdown.add(option);
+// }
+
 });
