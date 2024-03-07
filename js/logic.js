@@ -71,4 +71,12 @@ d3.json(geoData).then(function(data) {
   // Adding the legend to the map
   legend.addTo(myMap);
 
+  let selectDropdown = document.getElementById("selDataset");
+
+  for (let decade = 1950; decade <= 2024; decade += 10) {
+      let option = document.createElement("option");
+      option.text = decade + "s";
+      option.value = decade;
+      selectDropdown.add(option);
+}
 });
