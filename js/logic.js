@@ -73,21 +73,21 @@ d3.json(geoData).then(function(data) {
 
   let selectDecadeDropdown = document.getElementById("selDataset1");
 
-  for (let decade = 1950; decade <= 2024; decade += 10) {
+  for (let year = 1950; year <= 2024; year ++) {
       let option = document.createElement("option");
-      option.text = decade + "s";
-      option.value = decade;
+      option.text = year;
+      option.value = year;
       selectDecadeDropdown.add(option);
 }
 
-//   let selectGenderDropdown = document.getElementById("selDataset2");
+  let selectGenderDropdown = document.getElementById("selDataset2");
   
-//   let genders = ["Male", "Female", "Total"];
-//   genders.forEach(gender => {
-//     let option = document.createElement("option");
-//     option.text = gender;
-//     option.value = gender.toLowerCase();
-//     selectGenderDropdown.add(option);
-// }
+  let genders = ["Male", "Female", "Total"];
+  genders.forEach(gender => {
+    let option = document.createElement("option");
+    option.text = gender;
+    option.value = gender.toLowerCase();
+    selectGenderDropdown.add(option);
+});
 
 });

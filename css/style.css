@@ -47,6 +47,20 @@ html {
   float: right;
 }
 
+.main-cards {
+  border: 1px solid black;
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+  display: flex;
+}
+.card {
+  display: inline-block;
+  border: 1px solid red;
+  padding: 1rem 1rem;
+  vertical-align: middle;
+}
+
 h1 {
   text-align: center;
 }
