@@ -18,7 +18,7 @@ https://data.un.org/Data.aspx?q=life+expectancy&d=PopDiv&f=variableID%3a66
 
 https://data.un.org/Data.aspx?q=life+expectancy&d=PopDiv&f=variableID%3a67
 
-Need link to where Zac got the counties geojson file
+http://geojson.xyz/
 
 
 ## References
