@@ -1,6 +1,6 @@
 let pieData = [
-  { label: 'Country', value: parseFloat(cleanCountriesData.country) },
-  { label: 'Avg Life Expectancy', value: parseFloat(cleanCountriesData.combinedlifexpectancy) }
+  { label: 'Country', value: parseFloat(CleanedLifeExpectancyData1950to2024.country) },
+  { label: 'Avg Life Expectancy', value: parseFloat(CleanedLifeExpectancyData1950to2024.combinedlifexpectancy) }
 ];
 
 let width = 300;
