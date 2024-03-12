@@ -128,7 +128,7 @@ function filterYear(row, year){
 
 function hbarChart(year) {
   let lifeExpectancy = "CleanedLifeExpectancyData1950to2024.json"
-
+//  CHANGE
   d3.json(lifeExpectancy).then(function(data) {
     console.log(data.length)
     // TODO: sort data, slice data, Filter by year 
