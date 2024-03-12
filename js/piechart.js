@@ -1,42 +1,63 @@
-let pieData = [
-  { label: 'Country', value: parseFloat(CleanedLifeExpectancyData1950to2024.country) },
-  { label: 'Avg Life Expectancy', value: parseFloat(CleanedLifeExpectancyData1950to2024.combinedlifexpectancy) }
-];
+// Define filterData function
+function filterData() {
+  // Filter data based on conditions (you can customize these conditions)
+  return lifeData.filter(item => item.year === params.year && item.gender === params.gender);
+}
 
-let width = 300;
-let height = 300;
-let radius = Math.min(width, height) / 2;
+function createPieChart() {
+  // Filter the data based on conditions
+  let filteredLifeData = filterData();
 
-let colorScale = d3.scaleOrdinal()
-  .domain(pieData.map(d => d.label))
-  .range(['#4e79a7', '#f28e2c']);
+  // Create pie chart data
+  let pieData = filteredLifeData.map(item => ({
+    label: item.country,
+    value: parseFloat(item.combinedavglifeexpectancy),
+  }));
 
-let svg = d3.select('#pie-chart-container')
-  .append('svg')
-  .attr('width', width)
-  .attr('height', height)
-  .append('g')
-  .attr('transform', `translate(${width / 2},${height / 2})`);
+  // Set up pie chart dimensions
+  let pieWidth = 300;
+  let pieHeight = 300;
+  let pieRadius = Math.min(pieWidth, pieHeight) / 2;
 
-let pie = d3.pie().value(d => d.value);
-let arc = d3.arc().outerRadius(radius).innerRadius(0);
+  // Set up color scale
+  let colorScale = d3.scaleOrdinal()
+    .domain(pieData.map(d => d.label))
+    .range(['#4e79a7', '#f28e2c', '#e15759', '#76b7b2', '#59a14f']);
 
-let arcs = svg.selectAll('arc')
-  .data(pie(pieData))
-  .enter()
-  .append('g')
-  .attr('class', 'arc');
+  // Create SVG element for the pie chart
+  let pieSvg = d3.select('#pie-chart-container')
+    .append('svg')
+    .attr('width', pieWidth)
+    .attr('height', pieHeight)
+    .append('g')
+    .attr('transform', `translate(${pieWidth / 2},${pieHeight / 2})`);
 
-arcs.append('path')
-  .attr('d', arc)
-  .attr('fill', d => colorScale(d.data.label))
-  .attr('stroke', 'white')
-  .style('stroke-width', '2px');
+  // Create pie chart arcs
+  let pie = d3.pie().value(d => d.value);
+  let arc = d3.arc().outerRadius(pieRadius).innerRadius(0);
 
-arcs.append('text')
-  .attr('transform', d => `translate(${arc.centroid(d)})`)
-  .attr('text-anchor', 'middle')
-  .text(d => d.data.label)
-  .style('fill', 'white');
+  // Add slices to the pie chart
+  let pieArcs = pieSvg.selectAll('arc')
+    .data(pie(pieData))
+    .enter()
+    .append('g')
+    .attr('class', 'arc');
 
+  pieArcs.append('path')
+    .attr('d', arc)
+    .attr('fill', d => colorScale(d.data.label))
+    .attr('stroke', 'white')
+    .style('stroke-width', '2px');
 
+  // Add labels
+  pieArcs.append('text')
+    .attr('transform', d => `translate(${arc.centroid(d)})`)
+    .attr('text-anchor', 'middle')
+    .text(d => d.data.label)
+    .style('fill', 'white');
+}
+// Call the plotData function
+plotData();
+
+// Call the createPieChart function
+createPieChart();
