@@ -35,6 +35,13 @@
     <!-- D3 library -->
     <script src="https://d3js.org/d3.v7.min.js"></script>
 
+    <!-- add local geojson info
+    <script src="Cleanedcountries.geojson"></script>
+
+    add local life exp info -->
+    <!-- <script src="CleanedLifeExpectancyData1950to2024.json"></script> -->
+
+    
     <!-- leaflet-choropleth JavaScript -->
     <script type="text/javascript" src="js/choropleth.js"></script>
 
@@ -56,20 +63,9 @@
 
                 <div class="card">
                     <div class="card-inner">
-                      <h3>DECADE SELECTOR</h3>
+                      <h3>YEAR SELECTOR</h3>
                     </div>
-                    <select id="selDataset1" onchange="optionChanged(this.value)"></select>
-                </div>
-
-            <!-- </div>
-            
-            <div class="main-cards">     -->
-
-                <div class="card">
-                  <div class="card-inner">
-                    <h3>GENDER SELECTOR</h3>
-                  </div>
-                  <select id="selDataset2" onchange="optionChanged(this.value)"></select>
+                    <select id="selDataset1" onchange="optionChanged('year', this.value)"></select>
                 </div>
 
             </div>
@@ -132,8 +128,10 @@
       </div> -->
 
 
-    <!-- JavaScript file -->
-    <script type="text/javascript" src="js/logic.js"></script>
+    <!-- Our JavaScript -->
+    <script type="text/javascript" src="data\Cleanedcountries.js"></script>
+    <script type="text/javascript" src="data\CleanedLifeExpectancyData1950to2024.js"></script>
+    <script type="text/javascript" src="js\logic.js"></script>
 
   </body>
 </html>
