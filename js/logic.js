@@ -1,93 +1,85 @@
-// Creating the map object
-let myMap = L.map("map", {
-  center: [0, 0],
-  zoom: 1
-});
+// -------------------------------------
+// WORLD MAP START
+// -------------------------------------
+var params = {year: lifeData[0].year, gender: ''};
 
-// Adding the tile layer
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(myMap);
+var map = L.map('map').setView([0, 0], 2);
 
-// Load the GeoJSON data.
-let geoData = "https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/15-Mapping-Web/ACS-ED_2014-2018_Economic_Characteristics_FL.geojson";
+var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
 
-// Get the data with d3.
-d3.json(geoData).then(function(data) {
-
-  // Create a new choropleth layer.
-  let geojson = L.choropleth(data, {
-
-    // Define which property in the features to use.
-    valueProperty: "DP03_16E",
-
-    // Set the color scale.
-    scale: ["#ffffb2", "#b10026"],
-
-    // The number of breaks in the step range
-    steps: 10,
-
-    // q for quartile, e for equidistant, k for k-means
-    mode: "q",
-    style: {
-      // Border color
-      color: "#fff",
-      weight: 1,
-      fillOpacity: 0.8
-    },
-
-    // Binding a popup to each layer
-    onEachFeature: function(feature, layer) {
-      layer.bindPopup("<strong>" + feature.properties.NAME + "</strong><br /><br />Average life expectancy: " +
-        feature.properties.DP03_16E);
-    }
-  }).addTo(myMap);
-
-  // Set up the legend.
-  let legend = L.control({ position: "bottomright" });
-  legend.onAdd = function() {
-    let div = L.DomUtil.create("div", "info legend");
-    let limits = geojson.options.limits;
-    let colors = geojson.options.colors;
-    let labels = [];
-
-    // Add the minimum and maximum.
-    let legendInfo = "<h6>Average Life Expectancy</h6>" +
-      "<div class=\"labels\">" +
-        "<div class=\"min\">" + limits[0] + "</div>" +
-        "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
-      "</div>";
-
-    div.innerHTML = legendInfo;
-
-    limits.forEach(function(limit, index) {
-      labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
-    });
-
-    div.innerHTML += "<ul>" + labels.join("") + "</ul>";
-    return div;
-  };
-
-  // Adding the legend to the map
-  legend.addTo(myMap);
-
-  let selectDecadeDropdown = document.getElementById("selDataset1");
-
-  for (let year = 1950; year <= 2024; year ++) {
-      let option = document.createElement("option");
-      option.text = year;
-      option.value = year;
-      selectDecadeDropdown.add(option);
+function optionChanged(key, value) {
+  console.log(`optionChanged: ${key}: ${value}`);
+  params[key] = value;
+  plotData();
 }
 
-  let selectGenderDropdown = document.getElementById("selDataset2");
-  
-  let genders = ["Male", "Female", "Total"];
-  genders.forEach(gender => {
-    let option = document.createElement("option");
-    option.text = gender;
-    option.value = gender.toLowerCase();
-    selectGenderDropdown.add(option);
-});
 
-});
+function isLifeDataRowMatch(item, country, year, gender) {
+  return ((item.country == country.properties.sovereignt)
+  && (item.year = params.year));
+}
+
+
+function plotData() {
+  console.log(params);
+  cleanCountriesData.features.forEach(country => {
+      let matchingLifeData = lifeData.find(item => isLifeDataRowMatch(item, country, params.year, params.gender));
+
+      if (matchingLifeData) {
+          country.properties.countryData = {
+              country: matchingLifeData.country,
+              year: matchingLifeData.year,
+              combinedavglifeexpectancy: matchingLifeData.combinedavglifeexpectancy,
+              maleavglifeexpectancy: matchingLifeData.maleavglifeexpectancy,
+              femaleavglifeexpectancy: matchingLifeData.femaleavglifeexpectancy,
+              
+          };
+      }
+  });
+
+  // console.log(cleanCountriesData);
+
+  L.choropleth(cleanCountriesData, {
+    valueProperty: 'pop_est', // which property in the features to use
+    scale: ['white', 'blue'], // chroma.js scale - include as many as you like
+    steps: 10, // number of breaks or steps in range
+    mode: 'q', // q for quantile, e for equidistant, k for k-means
+    style: {
+      color: '#fff', // border color
+      weight: 2,
+      fillOpacity: 0.8
+    },
+    onEachFeature: function(feature, layer) {
+      const countryData = feature.properties.countryData;
+
+          // Check if countryData is available
+          if (countryData) {
+              layer.bindPopup("<strong><h3>" + feature.properties.sovereignt + " - " + countryData.year + "</h3></strong><br />Average Life Expectancy: " +
+                  countryData.combinedavglifeexpectancy + "<br /><br />Male Life Expectancy: " +
+                  countryData.maleavglifeexpectancy + "<br /><br />Female Life Expectancy: " +
+                  countryData.femaleavglifeexpectancy);
+          }
+      }
+  }).addTo(map);
+};
+
+// -------------------------------------
+// WORLD MAP END
+// -------------------------------------
+
+  let selectYearDropdown = document.getElementById("selDataset1");
+
+  lifeData.forEach(obj=>{
+    // console.log(`Object ${index + 1}:`);
+    const year = obj.year;
+    const option = document.createElement("option");
+    option.value = year;
+    option.textContent = year;
+    selectYearDropdown.append(option)});
+
+plotData();
+
+// });
