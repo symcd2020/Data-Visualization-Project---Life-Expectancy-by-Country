@@ -129,7 +129,7 @@ function filterYear(row, year){
 
 function hbarChart(year) {
   let lifeExpectancy = "CleanedLifeExpectancyData1950to2024.json"
-
+//  CHANGE
   d3.json(lifeExpectancy).then(function(data) {
     console.log(data.length)
     
@@ -171,7 +171,7 @@ function hbarChart(year) {
         width: 800,
   };
 
-  Plotly.newPlot("bar", chart, layout);
+  Plotly.newPlot("high-bar", chart, layout);
 })};
 
 //init state of hbar
@@ -232,7 +232,7 @@ function hbarChart(year) {
         width: 800,
   };
 
-  Plotly.newPlot("bar", chart, layout);
+  Plotly.newPlot("low-bar", chart, layout);
 })};
 
 //init state of hbar
