@@ -1,78 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pie Chart Example</title>
-    <!-- Include Plotly.js -->
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-</head>
-<body>
-  <div id="circle-chart"></div> 
+function aggregateLifeExpectancy(year) {
+    let aggregatedData = {};
+
+    // Filter data for the given year
+    let filteredData = lifeData.filter(row => row.year == year);
     
-    <!-- Your JavaScript code -->
-
-
-    <script>
-        function aggregateLifeExpectancy(year) {
-            let aggregatedData = {};
-
-            // Filter data for the given year
-            let filteredData = lifeData.filter(row => row.year == continent);
-            
-            // Iterate through filtered data to aggregate combined life expectancy for each continent
-            filteredData.forEach(row => {
-                let continent = row.continent;
-                console.log(continent)
-                let combinedLifeExpectancy = row.combinedavglifeexpectancy;
-                
-                // If continent already exists in aggregated data, add the life expectancy, else initialize it
-                if (aggregatedData.hasOwnProperty(continent)) {
-                    aggregatedData[continent] += combinedLifeExpectancy;
-                } else {
-                    aggregatedData[continent] = combinedLifeExpectancy;
-                }
-            });
-            
-            return aggregatedData;
-            
-          } 
+    // Iterate through filtered data to aggregate combined life expectancy for each continent
+    filteredData.forEach(row => {
+        let continent = row.continent;
+        let combinedLifeExpectancy = row.combinedavglifeexpectancy;
         
-        // This was missing in your code
-      
-
-        function plotPieChart(year) {
-            let aggregatedData = aggregateLifeExpectancy(year);
-            
-            // Convert aggregated data into arrays for Plotly
-            let labels = Object.keys(aggregatedData);
-            let values = Object.values(aggregatedData);
-            
-            // Create pie chart data
-            let pieChart = {
-                labels: labels,
-                values: values,
-                type: 'pie'
-            };
-            
-            let layout = {
-                height: 500,
-                width: 600
-            };
-            
-            Plotly.newPlot('circle-chart', [pieChart], layout);
+        // If continent already exists in aggregated data, add the life expectancy, else initialize it
+        if (aggregatedData.hasOwnProperty(continent)) {
+            aggregatedData[continent] += combinedLifeExpectancy;
+        } else {
+            aggregatedData[continent] = combinedLifeExpectancy;
         }
+    });
+    
+    return aggregatedData;
+}
 
-        // Call plotPieChart function with the desired year
-        plotPieChart(1950);
+function plotPieChart(year) {
+    let aggregatedData = aggregateLifeExpectancy(year);
+    
+    // Convert aggregated data into arrays for Plotly
+    let labels = Object.keys(aggregatedData);
+    let values = Object.values(aggregatedData);
+    
+    // Custom colors for the pie chart
+    let customColors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
 
-  
+    // Create pie chart data with custom colors
+    let pieChart = {
+        labels: labels,
+        values: values,
+        type: 'pie',
+        marker: { colors: customColors } 
+    };
 
-<script type="text/javascript" src="data\Cleanedcountries.js"></script>
-    <script type="text/javascript" src="data\CleanedLifeExpectancyData1950to2024.js"></script>
-    <script type="text/javascript" src="js\logic.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    let layout = {
+        height: 500,
+        width: 600
+    };
+    
+    Plotly.newPlot('piechart', [pieChart], layout);
+}
 
-    </script>
-</body>
-</html>
+// Call plotPieChart function with the desired year
+plotPieChart(1950);
+
