@@ -171,7 +171,7 @@ function hbarChart(year) {
         width: 800,
   };
 
-  Plotly.newPlot("bar", chart, layout);
+  Plotly.newPlot("high-bar", chart, layout);
 })};
 
 //init state of hbar
@@ -232,7 +232,7 @@ function hbarChart(year) {
         width: 800,
   };
 
-  Plotly.newPlot("bar", chart, layout);
+  Plotly.newPlot("low-bar", chart, layout);
 })};
 
 //init state of hbar
