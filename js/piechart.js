@@ -1,63 +1,78 @@
-// Define filterData function
-function filterData() {
-  // Filter data based on conditions (you can customize these conditions)
-  return lifeData.filter(item => item.year === params.year && item.gender === params.gender);
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart Example</title>
+    <!-- Include Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <div id="circle-chart"></div> 
+    
+    <!-- Your JavaScript code -->
 
-function createPieChart() {
-  // Filter the data based on conditions
-  let filteredLifeData = filterData();
 
-  // Create pie chart data
-  let pieData = filteredLifeData.map(item => ({
-    label: item.country,
-    value: parseFloat(item.combinedavglifeexpectancy),
-  }));
+    <script>
+        function aggregateLifeExpectancy(year) {
+            let aggregatedData = {};
 
-  // Set up pie chart dimensions
-  let pieWidth = 300;
-  let pieHeight = 300;
-  let pieRadius = Math.min(pieWidth, pieHeight) / 2;
+            // Filter data for the given year
+            let filteredData = lifeData.filter(row => row.year == continent);
+            
+            // Iterate through filtered data to aggregate combined life expectancy for each continent
+            filteredData.forEach(row => {
+                let continent = row.continent;
+                console.log(continent)
+                let combinedLifeExpectancy = row.combinedavglifeexpectancy;
+                
+                // If continent already exists in aggregated data, add the life expectancy, else initialize it
+                if (aggregatedData.hasOwnProperty(continent)) {
+                    aggregatedData[continent] += combinedLifeExpectancy;
+                } else {
+                    aggregatedData[continent] = combinedLifeExpectancy;
+                }
+            });
+            
+            return aggregatedData;
+            
+          } 
+        
+        // This was missing in your code
+      
 
-  // Set up color scale
-  let colorScale = d3.scaleOrdinal()
-    .domain(pieData.map(d => d.label))
-    .range(['#4e79a7', '#f28e2c', '#e15759', '#76b7b2', '#59a14f']);
+        function plotPieChart(year) {
+            let aggregatedData = aggregateLifeExpectancy(year);
+            
+            // Convert aggregated data into arrays for Plotly
+            let labels = Object.keys(aggregatedData);
+            let values = Object.values(aggregatedData);
+            
+            // Create pie chart data
+            let pieChart = {
+                labels: labels,
+                values: values,
+                type: 'pie'
+            };
+            
+            let layout = {
+                height: 500,
+                width: 600
+            };
+            
+            Plotly.newPlot('circle-chart', [pieChart], layout);
+        }
 
-  // Create SVG element for the pie chart
-  let pieSvg = d3.select('#pie-chart-container')
-    .append('svg')
-    .attr('width', pieWidth)
-    .attr('height', pieHeight)
-    .append('g')
-    .attr('transform', `translate(${pieWidth / 2},${pieHeight / 2})`);
+        // Call plotPieChart function with the desired year
+        plotPieChart(1950);
 
-  // Create pie chart arcs
-  let pie = d3.pie().value(d => d.value);
-  let arc = d3.arc().outerRadius(pieRadius).innerRadius(0);
+  
 
-  // Add slices to the pie chart
-  let pieArcs = pieSvg.selectAll('arc')
-    .data(pie(pieData))
-    .enter()
-    .append('g')
-    .attr('class', 'arc');
+<script type="text/javascript" src="data\Cleanedcountries.js"></script>
+    <script type="text/javascript" src="data\CleanedLifeExpectancyData1950to2024.js"></script>
+    <script type="text/javascript" src="js\logic.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-  pieArcs.append('path')
-    .attr('d', arc)
-    .attr('fill', d => colorScale(d.data.label))
-    .attr('stroke', 'white')
-    .style('stroke-width', '2px');
-
-  // Add labels
-  pieArcs.append('text')
-    .attr('transform', d => `translate(${arc.centroid(d)})`)
-    .attr('text-anchor', 'middle')
-    .text(d => d.data.label)
-    .style('fill', 'white');
-}
-// Call the plotData function
-plotData();
-
-// Call the createPieChart function
-createPieChart();
+    </script>
+</body>
+</html>
