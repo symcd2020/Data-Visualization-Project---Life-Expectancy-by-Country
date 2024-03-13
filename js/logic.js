@@ -116,7 +116,8 @@ plotData(1950);
 
 
 // -------------------------------------
-// BAR CHART START
+// -------------------------------------
+// HIGHEST BAR CHART START
 // -------------------------------------
 
 // Set up URL for data
@@ -131,7 +132,8 @@ function hbarChart(year) {
 //  CHANGE
   d3.json(lifeExpectancy).then(function(data) {
     console.log(data.length)
-    // TODO: sort data, slice data, Filter by year 
+    
+    data.sort((a,b) => a.combinedavglifeexpectancy - b.combinedavglifeexpectancy);
     data = data.filter(row => row.year == year);
     data = data.slice(0, 10);
     let y_axis = data.map(row => row.country)
@@ -145,19 +147,89 @@ function hbarChart(year) {
         text: text,
         type: "bar",
         orientation: "h",
+       
+          
     };
 
     let chart = [barChart];
 
     let layout = {
         margin: {
-            l: 100,
+            l: 300,
             r: 100,
             t: 0,
             b: 100,
         },
-        height: 500,
-        width: 600,
+        
+        xaxis: {
+            title: 'Top 10 Countries with Highest Life Expectancies By Age'
+        },
+        yaxis: {
+          title: 'Country'
+      },
+        height: 300,
+        width: 800,
+  };
+
+  Plotly.newPlot("bar", chart, layout);
+})};
+
+//init state of hbar
+hbarChart(1950); //todo: get value of ddl
+
+// -------------------------------------
+// LOWEST BAR CHART START
+// -------------------------------------
+
+// Set up URL for data
+// Create horizontal bar chart for top 10 OTUs
+
+function filterYear(row, year){
+  return row.year == year;
+}
+
+function hbarChart(year) {
+  let lifeExpectancy = "CleanedLifeExpectancyData1950to2024.json"
+
+  d3.json(lifeExpectancy).then(function(data) {
+    console.log(data.length)
+    
+    data.sort((a,b) => b.combinedavglifeexpectancy - a.combinedavglifeexpectancy);
+    data = data.filter(row => row.year == year);
+    data = data.slice(0, 10);
+    let y_axis = data.map(row => row.country)
+    let x_axis = data.map(row => row.combinedavglifeexpectancy)
+    let text = data.map(row => row.country)
+    console.log(data.length)
+
+    barChart = {
+        x: x_axis,
+        y: y_axis,
+        text: text,
+        type: "bar",
+        orientation: "h",
+       
+          
+    };
+
+    let chart = [barChart];
+
+    let layout = {
+        margin: {
+            l: 300,
+            r: 100,
+            t: 0,
+            b: 100,
+        },
+        
+        xaxis: {
+            title: 'Top 10 Countries with Lowest Life Expectancies By Age'
+        },
+        yaxis: {
+          title: 'Country'
+      },
+        height: 300,
+        width: 800,
   };
 
   Plotly.newPlot("bar", chart, layout);
@@ -168,4 +240,70 @@ hbarChart(1950); //todo: get value of ddl
 
 // -------------------------------------
 // BAR CHART END
+// -------------------------------------
+// -------------------------------------
+
+
+
+// -------------------------------------
+// PIE CHART START
+// -------------------------------------
+
+function aggregateLifeExpectancy(year) {
+  let aggregatedData = {};
+
+  // Filter data for the given year
+  let filteredData = lifeData.filter(row => row.year == year);
+  
+  // Iterate through filtered data to aggregate combined life expectancy for each continent
+  filteredData.forEach(row => {
+      let continent = row.continent;
+      console.log(continent)
+      let combinedLifeExpectancy = row.combinedavglifeexpectancy;
+      
+      // If continent already exists in aggregated data, add the life expectancy, else initialize it
+      if (aggregatedData.hasOwnProperty(continent)) {
+          aggregatedData[continent] += combinedLifeExpectancy;
+      } else {
+          aggregatedData[continent] = combinedLifeExpectancy;
+      }
+  });
+  
+  return aggregatedData;
+}
+
+function plotPieChart(year) {
+  let aggregatedData = aggregateLifeExpectancy(year);
+  
+  // Convert aggregated data into arrays for Plotly
+  let labels = Object.keys(aggregatedData);
+  let values = Object.values(aggregatedData);
+  
+
+  // Custom colors for the pie chart
+  let customColors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
+
+  // Create pie chart data with custom colors
+  let pieChart = {
+      labels: labels,
+      values: values,
+      type: 'pie',
+      marker: { colors: customColors } 
+  };
+
+
+  let layout = {
+      height: 500,
+      width: 600
+  };
+  
+  Plotly.newPlot('piechart', [pieChart], layout);
+}
+
+// Call plotPieChart function with the desired year
+plotPieChart(1950);
+
+
+// -------------------------------------
+// PIE CHART END
 // -------------------------------------

@@ -1,63 +1,51 @@
-// Define filterData function
-function filterData() {
-  // Filter data based on conditions (you can customize these conditions)
-  return lifeData.filter(item => item.year === params.year && item.gender === params.gender);
+function aggregateLifeExpectancy(year) {
+    let aggregatedData = {};
+
+    // Filter data for the given year
+    let filteredData = lifeData.filter(row => row.year == year);
+    
+    // Iterate through filtered data to aggregate combined life expectancy for each continent
+    filteredData.forEach(row => {
+        let continent = row.continent;
+        let combinedLifeExpectancy = row.combinedavglifeexpectancy;
+        
+        // If continent already exists in aggregated data, add the life expectancy, else initialize it
+        if (aggregatedData.hasOwnProperty(continent)) {
+            aggregatedData[continent] += combinedLifeExpectancy;
+        } else {
+            aggregatedData[continent] = combinedLifeExpectancy;
+        }
+    });
+    
+    return aggregatedData;
 }
 
-function createPieChart() {
-  // Filter the data based on conditions
-  let filteredLifeData = filterData();
+function plotPieChart(year) {
+    let aggregatedData = aggregateLifeExpectancy(year);
+    
+    // Convert aggregated data into arrays for Plotly
+    let labels = Object.keys(aggregatedData);
+    let values = Object.values(aggregatedData);
+    
+    // Custom colors for the pie chart
+    let customColors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
 
-  // Create pie chart data
-  let pieData = filteredLifeData.map(item => ({
-    label: item.country,
-    value: parseFloat(item.combinedavglifeexpectancy),
-  }));
+    // Create pie chart data with custom colors
+    let pieChart = {
+        labels: labels,
+        values: values,
+        type: 'pie',
+        marker: { colors: customColors } 
+    };
 
-  // Set up pie chart dimensions
-  let pieWidth = 300;
-  let pieHeight = 300;
-  let pieRadius = Math.min(pieWidth, pieHeight) / 2;
-
-  // Set up color scale
-  let colorScale = d3.scaleOrdinal()
-    .domain(pieData.map(d => d.label))
-    .range(['#4e79a7', '#f28e2c', '#e15759', '#76b7b2', '#59a14f']);
-
-  // Create SVG element for the pie chart
-  let pieSvg = d3.select('#pie-chart-container')
-    .append('svg')
-    .attr('width', pieWidth)
-    .attr('height', pieHeight)
-    .append('g')
-    .attr('transform', `translate(${pieWidth / 2},${pieHeight / 2})`);
-
-  // Create pie chart arcs
-  let pie = d3.pie().value(d => d.value);
-  let arc = d3.arc().outerRadius(pieRadius).innerRadius(0);
-
-  // Add slices to the pie chart
-  let pieArcs = pieSvg.selectAll('arc')
-    .data(pie(pieData))
-    .enter()
-    .append('g')
-    .attr('class', 'arc');
-
-  pieArcs.append('path')
-    .attr('d', arc)
-    .attr('fill', d => colorScale(d.data.label))
-    .attr('stroke', 'white')
-    .style('stroke-width', '2px');
-
-  // Add labels
-  pieArcs.append('text')
-    .attr('transform', d => `translate(${arc.centroid(d)})`)
-    .attr('text-anchor', 'middle')
-    .text(d => d.data.label)
-    .style('fill', 'white');
+    let layout = {
+        height: 500,
+        width: 600
+    };
+    
+    Plotly.newPlot('piechart', [pieChart], layout);
 }
-// Call the plotData function
-plotData();
 
-// Call the createPieChart function
-createPieChart();
+// Call plotPieChart function with the desired year
+plotPieChart(1950);
+
