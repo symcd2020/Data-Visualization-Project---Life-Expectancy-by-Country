@@ -116,7 +116,8 @@ plotData(1950);
 
 
 // -------------------------------------
-// BAR CHART START
+// -------------------------------------
+// HIGHEST BAR CHART START
 // -------------------------------------
 
 // Set up URL for data
@@ -131,7 +132,8 @@ function hbarChart(year) {
 
   d3.json(lifeExpectancy).then(function(data) {
     console.log(data.length)
-    // TODO: sort data, slice data, Filter by year 
+    
+    data.sort((a,b) => a.combinedavglifeexpectancy - b.combinedavglifeexpectancy);
     data = data.filter(row => row.year == year);
     data = data.slice(0, 10);
     let y_axis = data.map(row => row.country)
@@ -145,19 +147,89 @@ function hbarChart(year) {
         text: text,
         type: "bar",
         orientation: "h",
+       
+          
     };
 
     let chart = [barChart];
 
     let layout = {
         margin: {
-            l: 100,
+            l: 300,
             r: 100,
             t: 0,
             b: 100,
         },
-        height: 500,
-        width: 600,
+        
+        xaxis: {
+            title: 'Top 10 Countries with Highest Life Expectancies By Age'
+        },
+        yaxis: {
+          title: 'Country'
+      },
+        height: 300,
+        width: 800,
+  };
+
+  Plotly.newPlot("bar", chart, layout);
+})};
+
+//init state of hbar
+hbarChart(1950); //todo: get value of ddl
+
+// -------------------------------------
+// LOWEST BAR CHART START
+// -------------------------------------
+
+// Set up URL for data
+// Create horizontal bar chart for top 10 OTUs
+
+function filterYear(row, year){
+  return row.year == year;
+}
+
+function hbarChart(year) {
+  let lifeExpectancy = "CleanedLifeExpectancyData1950to2024.json"
+
+  d3.json(lifeExpectancy).then(function(data) {
+    console.log(data.length)
+    
+    data.sort((a,b) => b.combinedavglifeexpectancy - a.combinedavglifeexpectancy);
+    data = data.filter(row => row.year == year);
+    data = data.slice(0, 10);
+    let y_axis = data.map(row => row.country)
+    let x_axis = data.map(row => row.combinedavglifeexpectancy)
+    let text = data.map(row => row.country)
+    console.log(data.length)
+
+    barChart = {
+        x: x_axis,
+        y: y_axis,
+        text: text,
+        type: "bar",
+        orientation: "h",
+       
+          
+    };
+
+    let chart = [barChart];
+
+    let layout = {
+        margin: {
+            l: 300,
+            r: 100,
+            t: 0,
+            b: 100,
+        },
+        
+        xaxis: {
+            title: 'Top 10 Countries with Lowest Life Expectancies By Age'
+        },
+        yaxis: {
+          title: 'Country'
+      },
+        height: 300,
+        width: 800,
   };
 
   Plotly.newPlot("bar", chart, layout);
@@ -168,6 +240,7 @@ hbarChart(1950); //todo: get value of ddl
 
 // -------------------------------------
 // BAR CHART END
+// -------------------------------------
 // -------------------------------------
 
 
