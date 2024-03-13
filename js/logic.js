@@ -127,7 +127,7 @@ function filterYear(row, year){
   return row.year == year;
 }
 
-function hbarChart(year) {
+function highBarChart(year) {
   let lifeExpectancy = "CleanedLifeExpectancyData1950to2024.json"
 //  CHANGE
   d3.json(lifeExpectancy).then(function(data) {
@@ -175,7 +175,7 @@ function hbarChart(year) {
 })};
 
 //init state of hbar
-hbarChart(1950); //todo: get value of ddl
+highBarChart(1950); //todo: get value of ddl
 
 // -------------------------------------
 // LOWEST BAR CHART START
@@ -184,11 +184,11 @@ hbarChart(1950); //todo: get value of ddl
 // Set up URL for data
 // Create horizontal bar chart for top 10 OTUs
 
-function filterYear(row, year){
-  return row.year == year;
-}
+// function filterYear(row, year){
+//   return row.year == year;
+// }
 
-function hbarChart(year) {
+function lowBarChart(year) {
   let lifeExpectancy = "CleanedLifeExpectancyData1950to2024.json"
 
   d3.json(lifeExpectancy).then(function(data) {
@@ -236,7 +236,7 @@ function hbarChart(year) {
 })};
 
 //init state of hbar
-hbarChart(1950); //todo: get value of ddl
+lowBarChart(1950); //todo: get value of ddl
 
 // -------------------------------------
 // BAR CHART END
