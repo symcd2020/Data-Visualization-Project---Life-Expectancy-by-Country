@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Life Expectancy by Country</title>
+
+    <!--   -----------------------------------------------------------------------------    -->
+    <!-- CSS -->
+    <!--   -----------------------------------------------------------------------------    -->
+
+    <!-- Our CSS -->
+
+    <link rel="stylesheet" type="text/css" href="css/dashboard.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+
+    <!--   -----------------------------------------------------------------------------    -->
+    <!-- JAVASCRIPT -->
+    <!--   -----------------------------------------------------------------------------    -->
+
+    <!-- Leaflet JavaScript code-->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+    <!-- D3 library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <!-- Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    <!-- add local geojson info
+    <script src="Cleanedcountries.geojson"></script>
+
+    add local life exp info -->
+    <!-- <script src="CleanedLifeExpectancyData1950to2024.json"></script> -->
+
+    
+    <!-- leaflet-choropleth JavaScript -->
+    <script type="text/javascript" src="js/choropleth.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    
+
+    
+  </head>
+  <body>
+
+    <div class="grid-container">
+
+        <!-- Main -->
+        <main class="main-container">
+            <div class="main-title">
+                <h2>DATA VISUALIZATION PROJECT</h2>
+            </div>
+
+            <div class="main-cards">
+
+                <div class="card">
+                    <div class="card-inner">
+                      <h3>YEAR SELECTOR</h3>
+                    </div>
+                    <select id="selDataset1" onchange="optionChanged('year', this.value)"></select>
+                </div>
+
+            </div>
+
+            <div class="charts">
+
+                <div class="charts-card">
+                    <h2 class="chart-title">World Map</h2>
+                    <div id="map"></div>
+                </div>
+
+                <div class="charts-card">
+                    <h2 class="chart-title">Pie Chart</h2>
+                    <div id="piechart"></div>
+                </div>
+
+                <div class="charts-card">
+                    <h2 class="chart-title">Bar Graph</h2>
+                    <div id="bar"></div>
+                </div>
+
+            </div>
+        </main>
+        <!-- End Main -->
+    </div>
+
+    <!-- <div class="container"> -->
+
+
+        <!-- Dashboard Title -->
+        <!-- <div class="row">
+          <div class="col-md-12 p-5 text-center bg-light">
+            <h1>Life Expectancy by Country</h1>
+            <p>Data Visualization Project</p>
+          </div>
+        </div> -->
+
+
+        <!-- First Row of the Dashboard -->
+        <!-- <div class="row">
+          <div class="col-md-2"> -->
+
+            <!-- Dropdown Selection     -->
+            <!-- <div class="card card-body bg-light">
+              <h6>Decade:</h6>
+              <select id="selDataset" onchange="optionChanged(this.value)"></select>
+            </div>
+
+          </div> -->
+          
+
+          <!-- World Map -->
+          <!-- <div class="col-md-5">
+            <div id="map"></div>
+          </div>
+
+        </div>
+
+      </div> -->
+  
+  
+      </body>
+
+
+    <!-- Our JavaScript -->
+    <script type="text/javascript" src="data\Cleanedcountries.js"></script>
+    <script type="text/javascript" src="data\CleanedLifeExpectancyData1950to2024.js"></script>
+    <script type="text/javascript" src="js\logic.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script type="text/javascript" src="js/piechart.js"></script>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
