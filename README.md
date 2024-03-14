@@ -1,6 +1,6 @@
 # Data Visualization Project - Life Expectancy by Country
 
-## Overview
+## Overview of the project and its purpose
 For this project, our team is looking at the average life expectancy by country. "Life expectancy at birth reflects the overall mortality level of a population. It is the average number of years that a person may expect to live, from birth to death."
 
 "There are 195 countries in the world today. The total comprises 193 countries that are member states of the United Nations and 2 countries that are non-member observer states." Our data looks at all 195 countries. 
@@ -9,6 +9,11 @@ For this project, our team is looking at the average life expectancy by country.
 The data we are using for this project comes from the United Nations (UN). The data set included 286 countries or areas with the average life expectancy for males, females, and both sexes combined for each year from 1950-2101. Our team decided to narrow our scope and only look at the 195 countires recognized by the UN. We also wanted to add in data identifying the continent for each country. 
 
 The data eas 
+
+## Instructions on how to use and interact with the project
+
+## At least one paragraph summarizing efforts for ethical considerations made in the project
+We used reliable UN data trusting they provided ethical data. We verified the data we produced on our app was accurately reflecting the UN data. 
 
 
 ## Sources
