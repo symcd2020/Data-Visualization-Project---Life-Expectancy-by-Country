@@ -91,7 +91,9 @@ function plotData(year) {
   // console.log(cleanCountriesData)
       let yearSelectionData = mapYearSelection(year);
       console.log(yearSelectionData);
-      L.choropleth(yearSelectionData, {
+
+
+      let geojson = L.choropleth(yearSelectionData, {
         valueProperty: 'combinedavglifeexpectancy', // which property in the features to use
         scale: ['white', 'blue'], // chroma.js scale - include as many as you like
         steps: 10, // number of breaks or steps in range
@@ -114,6 +116,34 @@ function plotData(year) {
               
           }
       }).addTo(map);
+
+      // Set up the legend.
+      let legend = L.control({ position: "bottomright" });
+      legend.onAdd = function() {
+        let div = L.DomUtil.create("div", "info legend");
+        let limits = geojson.options.limits;
+        let colors = geojson.options.colors;
+        let labels = [];
+
+        // Add the minimum and maximum.
+        let legendInfo = "<h1>Average Life Expectancy</h1>" +
+          "<div class=\"labels\">" +
+            "<div class=\"min\">" + limits[0] + "</div>" +
+            "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+          "</div>";
+
+        div.innerHTML = legendInfo;
+
+        limits.forEach(function(limit, index) {
+          labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
+        });
+
+        div.innerHTML += "<ul>" + labels.join("") + "</ul>";
+        return div;
+      };
+
+      // Adding the legend to the map
+      legend.addTo(map);
     };
 
 // -------------------------------------
