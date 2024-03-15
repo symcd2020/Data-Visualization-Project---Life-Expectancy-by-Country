@@ -1,74 +1,65 @@
-// function aggregateLifeExpectancy(year) {
-//     let aggregatedData = {};
+function aggregateLifeExpectancy(year) {
+    let aggregatedData = {};
   
-//     // Filter data for the given year
-//     let filteredData = lifeData.filter(row => row.year == year);
+    // Filter data for the given year
+    let filteredData = lifeData.filter(row => row.year == year);
   
-//     console.log(filteredData)
-
-// let continents = ['North America', 'South America', 'Africa', 'Europe', 'Asia', 'Australia'];
-
-// continents.forEach(continent) {
-// filteredData.filter()
-
-// }
-
-
-
-//     // Iterate through filtered data to aggregate combined life expectancy for each continent
-//     filteredData.forEach(row => {
-//         let continent = row.continent;
-//         let combinedLifeExpectancy = row.combinedavglifeexpectancy;
+  let continents = ['North America', 'South America', 'Africa', 'Europe', 'Asia', 'Oceania'];
+  let aggregateData = [];
   
-//         // If continent already exists in aggregated data, add the life expectancy, else initialize it
-//      if (aggregatedData.hasOwnProperty(continent)) {
-//     //         aggregatedData[continent] += combinedLifeExpectancy;
-//     //     } else {
-//     //         aggregatedData[continent] = combinedLifeExpectancy;
-//     //     }
-//     // });
+  continents.forEach(currentcontinent => {
+    let continentData = filteredData.filter(country => country.continent == currentcontinent)
   
-
-
-
-
-
-//     return aggregatedData;
-//   }
+    let length = continentData.length
   
-//   // Define plotPieChart function
-//   function plotPieChart(year) {
-//     let aggregatedData = aggregateLifeExpectancy(year);
+    let value = 0
+    continentData.forEach(row => {
+      value += parseFloat(row.combinedavglifeexpectancy)
+    })
+    let avglifeexpectancy = value/length
   
-//     // Convert aggregated data into arrays for Plotly
-//     let labels = Object.keys(aggregatedData);
-//     let values = Object.values(aggregatedData);
-
-
+    let currentcontinentdata = [currentcontinent, avglifeexpectancy]
+    aggregateData.push(currentcontinentdata)
+  });
   
-//     // Custom colors for the pie chart
-//     let customColors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
+  return aggregateData;
+  }
   
-//     // Create pie chart data with custom colors
-//     let pieChart = {
-//         labels: labels,
-//         values: values,
-//         type: 'pie',
-//         marker: { colors: customColors }
-//     };
+  // Define plotPieChart function
+  function plotPieChart(year) {
+    let aggregatedData = aggregateLifeExpectancy(year);
   
-//     let layout = {
-//         height: 500,
-//         width: 600
-//     };
+    // Convert aggregated data into arrays for Plotly
+    let labels = aggregatedData.map(function(x){
+      return x[0];
+    });
+    let values = aggregatedData.map(function(x){
+      return x[1];
+    });
+  console.log(labels,values)
   
-//     Plotly.newPlot('piechart', pieChart , layout);
-//   }
+  //   // Custom colors for the pie chart
+   let customColors = ['#1f77b4', '#ff7f0e','#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
   
-//   // Check if lifeData is available before calling plotPieChart
-//   if (lifeData.length > 0) {
-//     plotPieChart(1950); 
-//   } else {
-//     console.error('lifeData is not available');
-//   }
-
+  //   // Create pie chart data with custom colors
+    let pieChart = {
+       labels: labels,
+        values: values,
+        type: 'pie',
+        marker: { colors: customColors },
+        textinfo: 'value',
+        texttemplate: '%{value:.2f}'
+  
+     };
+  
+    let layout = {
+        height: 500,
+      width: 600
+    };
+  
+  Plotly.newPlot('piechart', [pieChart] , layout);
+   }
+  
+  
+  //Plot Chart
+  plotPieChart(1950); 
