@@ -33,7 +33,9 @@ function optionChanged(key, value) {
   plotData(value);
 
   //call hplot
-  hbarChart(value);
+  // hbarChart(value);
+  lowBarChart(value);
+  highBarChart(value);
 }
 
 // -------------------------------------
@@ -170,7 +172,7 @@ function filterYear(row, year){
 }
 
 function lowBarChart(year) {
-  let lifeExpectancy = "CleanedLifeExpectancyData1950to2024.json"
+  let lifeExpectancy = "Data/CleanedLifeExpectancyData1950to2024.json"
 //  CHANGE
   d3.json(lifeExpectancy).then(function(data) {
     console.log(data.length)
@@ -231,7 +233,7 @@ lowBarChart(1950); //todo: get value of ddl
 // }
 
 function highBarChart(year) {
-  let lifeExpectancy = "CleanedLifeExpectancyData1950to2024.json"
+  let lifeExpectancy = "Data/CleanedLifeExpectancyData1950to2024.json"
 
   d3.json(lifeExpectancy).then(function(data) {
     console.log(data.length)
