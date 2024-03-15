@@ -5,36 +5,27 @@ var params = {year: lifeData[0].year};
 // DROPDOWN START
 // -------------------------------------
 
-let selectYearDropdown = document.getElementById("selDataset1");
+  let selectYearDropdown = document.getElementById("selDataset1");
 
-let yearOptions = [];
+  let yearOptions = [];
 
-lifeData.forEach(obj=>{
-  const year = obj.year;
-  if (!(yearOptions.includes(year))){
-    yearOptions.push(year);
-  }
-});
+  lifeData.forEach(obj=>{
+    const year = obj.year;
+    if (!(yearOptions.includes(year))){
+      yearOptions.push(year);
+    }
+  });
+  
+    yearOptions.forEach(obj=>{
+    const option = document.createElement("option");
+    option.value = obj;
+    option.textContent = obj;
+    selectYearDropdown.append(option);
+  });
 
-  yearOptions.forEach(obj=>{
-  const option = document.createElement("option");
-  option.value = obj;
-  option.textContent = obj;
-  selectYearDropdown.append(option);
-});
 
-function optionChanged(key, value) {
-  console.log(`optionChanged: ${key}: ${value}`);
-  params[key] = value;
 
-  console.log(document.querySelector(".legend").innerHTML);
-  document.querySelector(".legend").remove();
-
-  plotData(value);
-
-  //call hplot
-  hbarChart(value);
-}
+// });
 
 // -------------------------------------
 // DROPDOWN END
@@ -45,14 +36,22 @@ function optionChanged(key, value) {
 // -------------------------------------
 // WORLD MAP START
 // -------------------------------------
+var map = L.map('map').setView([0, 0], 2);
 
- var map = L.map('map').setView([0, 0], 2);
+var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
 
-      var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 19,
-          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-      }).addTo(map);
+function optionChanged(key, value) {
+  console.log(`optionChanged: ${key}: ${value}`);
+  params[key] = value;
 
+  plotData(value);
+
+  //call hplot
+  hbarChart(value);
+}
 
 function isLifeDataRowMatch(item, country, year, gender) {
   return ((item.country == country.properties.sovereignt)
@@ -87,19 +86,16 @@ function mapYearSelection(year){
   //return goejhon dataset with life data for givven year
 }
 
-
-
 function plotData(year) {
-     
+
   // console.log(cleanCountriesData)
       let yearSelectionData = mapYearSelection(year);
       console.log(yearSelectionData);
 
 
-
       let geojson = L.choropleth(yearSelectionData, {
         valueProperty: 'combinedavglifeexpectancy', // which property in the features to use
-        scale: ['#30C5FF', '#FF1053'], // chroma.js scale - include as many as you like
+        scale: ['white', 'blue'], // chroma.js scale - include as many as you like
         steps: 10, // number of breaks or steps in range
         mode: 'q', // q for quantile, e for equidistant, k for k-means
         style: {
@@ -112,7 +108,7 @@ function plotData(year) {
               // Check if countryData is available
               
                 // feature.properties.year
-                  layer.bindPopup("<strong><h3>" + feature.properties.name + "</h3></strong><br />Average Life Expectancy: " +
+                  layer.bindPopup("<strong><h3>" + feature.properties.name + " - "  + "</h3></strong><br />Average Life Expectancy: " +
                       feature.properties.combinedavglifeexpectancy + "<br /><br />Male Life Expectancy: " +
                       feature.properties.maleavglifeexpectancy + "<br /><br />Female Life Expectancy: " +
                       feature.properties.femaleavglifeexpectancy
@@ -135,10 +131,8 @@ function plotData(year) {
             "<div class=\"min\">" + limits[0] + "</div>" +
             "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
           "</div>";
-          console.log(legendInfo);
 
         div.innerHTML = legendInfo;
-      
 
         limits.forEach(function(limit, index) {
           labels.push("<li style=\"background-color: " + colors[index] + "\"></li>");
@@ -150,7 +144,6 @@ function plotData(year) {
 
       // Adding the legend to the map
       legend.addTo(map);
-      return legend;
     };
 
 // -------------------------------------
