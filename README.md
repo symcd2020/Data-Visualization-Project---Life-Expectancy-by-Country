@@ -10,7 +10,7 @@ For this project, our team is looking at the average life expectancy by country.
 The purpose of the project is to be able to identify average life expectancies over the years for each country. You can see the changes over time and sexes. You can also see the the average life expectancies by continents. Additionally, you can see the countries with the highest and lowest life expectancies. 
 
 ## Data
-The data we are using for this project comes from the United Nations (UN). The data set included 286 countries or areas with the average life expectancy for males, females, and both sexes combined for each year from 1950-2101. Our team decided to narrow our scope and only look at the 193 countires recognized by the UN from 1950-2024. We also added in data identifying the continent for each country. Then we used a geoJSON file found online to assist us in creating the map. 
+The data we are using for this project comes from the United Nations (UN). The data set included 286 countries or areas with the average life expectancy for males, females, and both sexes combined for each year from 1950-2101. Our team decided to narrow our scope and only look at 193 countires recognized by the UN with data from 1950-2024. We also added in data identifying the continent for each country. Then we used a geoJSON file found online to assist us in creating the map. 
 
 The data pulled from the UN was in three different files, one for each sex and one combined. Additionally, there was a fourth file which included a list of countries and their continent. These CSV files were added as tables to a database in SQL and joined together to export one CSV file. This new merged CSV file was then converetd to a JSON in python. 
 
