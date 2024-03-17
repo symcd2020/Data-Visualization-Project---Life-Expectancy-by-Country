@@ -1,9 +1,12 @@
-body {
+* {
     margin: 0;
     padding: 0;
-    background-color: #172036;
-    color: #ffffff;
-    font-family: "Montserrat", sans-serif;
+    box-sizing: border-box;
+    font-family: Dubai;
+}
+
+body {
+    background: linear-gradient(#d8dbfe, #f4dbfb);
 }
 
 .grid-container {
@@ -12,7 +15,12 @@ body {
     grid-template-rows: 3fr;
     grid-template-areas: 
         "main main main";
-    height: 100vh;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
 }
 
 
@@ -22,18 +30,83 @@ body {
     grid-area: main;
     overflow-y: auto;
     padding: 20px 20px;
-    color: rgba(255, 255, 255, 0.95);
+    color: #000;
 }
 
-.main-cards {
-    display: grid;
-    grid-template-columns: 1fr;
+/* top start */
+.main-container .top {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    display: flex;
     justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: #fff;
+    border-radius: 20px;
+}
+/* searchBx start */
+.main-container .top .title {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+.main-container .top .title h2 {
+    color: #000;
+    font-size: 2em;
+    cursor: pointer;
+}
+.main-container .top .title .dropdown {
+    position: relative;
+    width: 100px;
+    height: 40px;
+    background: #f8f2fe;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.main-container .top .title .dropdown #selDataset1 {
+    position: relative;
+    width: 100%;
+    height: 25px;
+    outline: none;
+    border: none;
+    background: transparent;
+    margin-right: 10px;
+    font-size: 1.2em;
+    color: #000;
+}
+
+
+
+
+
+
+
+
+.main-cards {
+    position: relative;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background: #fff;
+    border-radius: 20px;
 }
 
 .main-title {
     display: flex;
-    color: #ffffff;
+    color: #000;
     margin: auto;
 }
 
@@ -46,14 +119,22 @@ body {
 .card-inner{
     display: flex;
     justify-content: center;
-    color: #fff;
+    color: #000;
 }
 
 #selDataset1{
+    position: relative;
+    width: 100px;
     height: 40px;
-    width: 200px;
-    margin-left: 15px;
+    background: #f8f2fe;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-start;
     align-items: center;
+    padding-left: 10px;
+    gap: 10px;
+    overflow: hidden;
+    background: transparent;
 }
 
 .charts {

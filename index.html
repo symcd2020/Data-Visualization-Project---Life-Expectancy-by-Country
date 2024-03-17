@@ -58,23 +58,17 @@
     <div class="grid-container">
 
         <!-- Main -->
+       
         <main class="main-container">
-            
 
-            <div class="main-cards">
-                <div class="main-title">
-                    <h2>DATA VISUALIZATION PROJECT</h2>
-                    <br>
+             <div class="top">
+                <div class="title">
+                  <h2>World Life Expectancy Dashboard</h2>
+                  <div class="dropdown">
+                    <select id="selDataset1" onchange="optionChanged('year', this.value)"></select>
+                  </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-inner">
-                      <p>YEAR SELECTOR </p> <select id="selDataset1" onchange="optionChanged('year', this.value)"></select>
-                    </div>
-                    
-                </div>
-
-            </div>
+              </div>
 
             <div class="charts">
 
@@ -84,17 +78,17 @@
                 </div>
 
                 <div class="charts-card">
-                    <h2 class="chart-title">Pie Chart</h2>
+                    <h2 class="chart-title">Average Life Expectancy by Continent</h2>
                     <div id="piechart"></div>
                 </div>
 
                 <div class="charts-card">
-                    <h2 class="chart-title">Bar Graph 1</h2>
+                    <h2 class="chart-title">Top 10 Countries with Highest Life Expectancies By Age</h2>
                     <div id="high-bar"></div>
                 </div>
 
                 <div class="charts-card">
-                  <h2 class="chart-title">Bar Graph 2</h2>
+                  <h2 class="chart-title">Top 10 Countries with Lowest Life Expectancies By Age</h2>
                   <div id="low-bar"></div>
               </div>
 
@@ -112,7 +106,6 @@
     <script type="text/javascript" src="js\CleanedLifeExpectancyData1950to2024.js"></script>
     <script type="text/javascript" src="js\logic.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> -->
-    <!-- <script type="text/javascript" src="js/piechart.js"></script>
 
 
 <!DOCTYPE html>

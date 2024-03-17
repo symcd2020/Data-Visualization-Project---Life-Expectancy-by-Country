@@ -27,15 +27,21 @@ function optionChanged(key, value) {
   console.log(`optionChanged: ${key}: ${value}`);
   params[key] = value;
 
+  // calls on the legend class and removes it if already exists
   console.log(document.querySelector(".legend").innerHTML);
   document.querySelector(".legend").remove();
 
+  // call on world map function plotData
   plotData(value);
 
-  //call hplot
-  // hbarChart(value);
+  // call on function lowBarChar
   lowBarChart(value);
+
+  // call on function highBarChart
   highBarChart(value);
+
+  // call on function plotPieChart
+  plotPieChart(value)
 }
 
 // -------------------------------------
@@ -48,72 +54,77 @@ function optionChanged(key, value) {
 // WORLD MAP START
 // -------------------------------------
 
- var map = L.map('map').setView([0, 0], 2);
+// Creating the map object, makes it so the map does not zoom in or out on mouse wheel, and sets view to center of map
+ var map = L.map('map', {scrollWheelZoom :false}).setView([0, 0], 2);
 
+ // Adds the tile layer
       var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
           maxZoom: 19,
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
       }).addTo(map);
 
-
+// Checks to see if the country matches in both datasets and if the year from the dropdown matches the year in the country dataset 
 function isLifeDataRowMatch(item, country, year, gender) {
   return ((item.country == country.properties.sovereignt)
   && (item.year = params.year));
 }
 
+
+//takes an inputted year and returns a country's life expectancy data for that year
 function mapYearSelection(year){
-  //Filter clean life expectancy on year
+
+  //filters clean life expectancy by year
   selectedYear = lifeData.filter(row => row.year == year);
   let geojson = cleanCountriesData;
   console.log(selectedYear.length);
-  //inject data into geojson properties ----------------
+
+  //inject data into geojson properties
   for (i= 0; i < selectedYear.length; i++){
     let country = selectedYear[i].country;
     for (j=0; j < geojson.features.length; j++){
 
-     if (geojson.features[j].properties.name.toLowerCase() == country.toLowerCase()){ //compare both sides in lower
+     //compares both sides in lower
+     if (geojson.features[j].properties.name.toLowerCase() == country.toLowerCase()){ 
         
-        // inject data in to geojson
+        // injects data in to geojson
         geojson.features[j].properties.combinedavglifeexpectancy = selectedYear[i].combinedavglifeexpectancy;
         geojson.features[j].properties.maleavglifeexpectancy = selectedYear[i].maleavglifeexpectancy;
         geojson.features[j].properties.femaleavglifeexpectancy = selectedYear[i].femaleavglifeexpectancy;
         geojson.features[j].properties.year = selectedYear[i].year;
         
-        break; //stop looking, we found it
+        break;
      }
     }
 
   }
-  
+  //returns the geojson dataset with life data for the selected year
    return geojson;
-  //return goejhon dataset with life data for givven year
+  
 }
 
-
-
+//plots out a map with a country's specific life expectancy data based on a given year
 function plotData(year) {
      
   // console.log(cleanCountriesData)
       let yearSelectionData = mapYearSelection(year);
       console.log(yearSelectionData);
 
-
-
+      // Create a new choropleth layer.
       let geojson = L.choropleth(yearSelectionData, {
-        valueProperty: 'combinedavglifeexpectancy', // which property in the features to use
-        scale: ['#30C5FF', '#FF1053'], // chroma.js scale - include as many as you like
-        steps: 10, // number of breaks or steps in range
-        mode: 'q', // q for quantile, e for equidistant, k for k-means
+
+        //life expectancy data value to use for the color scale
+        valueProperty: 'combinedavglifeexpectancy',
+        scale: ['#FF1053', '#30C5FF'],
+        steps: 10,
+        mode: 'q',
         style: {
-          color: '#fff', // border color
-          weight: 2,
+          color: '#fff',
+          weight: 1,
           fillOpacity: 0.8
         },
-        onEachFeature: function(feature, layer) {
 
-              // Check if countryData is available
-              
-                // feature.properties.year
+        //adds a popup for every click on a specific country and adds it to the map
+        onEachFeature: function(feature, layer) {
                   layer.bindPopup("<strong><h3>" + feature.properties.name + "</h3></strong><br />Average Life Expectancy: " +
                       feature.properties.combinedavglifeexpectancy + "<br /><br />Male Life Expectancy: " +
                       feature.properties.maleavglifeexpectancy + "<br /><br />Female Life Expectancy: " +
@@ -161,19 +172,17 @@ function plotData(year) {
 
 
 // -------------------------------------
-// HIGHEST BAR CHART START
+// LOWEST BAR CHART START
 // -------------------------------------
 
-// Set up URL for data
-// Create horizontal bar chart for top 10 OTUs
-
+// Create horizontal bar chart for top 10 countries with lowest life expectancy
 function filterYear(row, year){
   return row.year == year;
 }
 
 function lowBarChart(year) {
   let lifeExpectancy = "Data/CleanedLifeExpectancyData1950to2024.json"
-//  CHANGE
+
   d3.json(lifeExpectancy).then(function(data) {
     console.log(data.length)
     
@@ -191,47 +200,41 @@ function lowBarChart(year) {
         text: text,
         type: "bar",
         orientation: "h",
-       
-          
+        marker: {
+          color: 'FF1053'
+      }
     };
 
     let chart = [barChart];
 
     let layout = {
         margin: {
-            l: 300,
-            r: 100,
+            l: 200,
+            r: 50,
             t: 0,
             b: 100,
         },
         
         xaxis: {
-            title: 'Top 10 Countries with Lowest Life Expectancies By Age'
+            title: 'Age'
         },
         yaxis: {
-          title: 'Country'
+          // title: 'Country'
       },
-        height: 300,
+        height: 500,
         width: 800,
   };
 
   Plotly.newPlot("low-bar", chart, layout);
 })};
 
-//init state of hbar
-lowBarChart(1950); //todo: get value of ddl
+lowBarChart(1950);
 
 // -------------------------------------
-// LOWEST BAR CHART START
+// HIGHEST BAR CHART START
 // -------------------------------------
 
-// Set up URL for data
-// Create horizontal bar chart for top 10 OTUs
-
-// function filterYear(row, year){
-//   return row.year == year;
-// }
-
+// Create horizontal bar chart for top 10 countries with highest life expectancy
 function highBarChart(year) {
   let lifeExpectancy = "Data/CleanedLifeExpectancyData1950to2024.json"
 
@@ -252,7 +255,9 @@ function highBarChart(year) {
         text: text,
         type: "bar",
         orientation: "h",
-       
+        marker: {
+          color: '30C5FF'
+      }
           
     };
 
@@ -260,32 +265,34 @@ function highBarChart(year) {
 
     let layout = {
         margin: {
-            l: 300,
-            r: 100,
+            l: 200,
+            r: 50,
             t: 0,
             b: 100,
         },
         
         xaxis: {
-            title: 'Top 10 Countries with Highest Life Expectancies By Age'
+            title: 'Age'
         },
         yaxis: {
-          title: 'Country'
+          // title: 'Country'
       },
-        height: 300,
+        height: 500,
         width: 800,
   };
 
   Plotly.newPlot("high-bar", chart, layout);
 })};
 
-//init state of hbar
-highBarChart(1950); //todo: get value of ddl
+
+highBarChart(1950);
 plotData(1950);
 
 // -------------------------------------
 // BAR CHART END
 // -------------------------------------
+
+
 
 // -------------------------------------
 // PIE CHART START
@@ -332,7 +339,7 @@ function plotPieChart(year) {
 console.log(labels,values)
 
 //   // Custom colors for the pie chart
- let customColors = ['#1f77b4', '#ff7f0e','#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
+ let customColors = ['#FF1053 ', '#9B5DE5','#F28F3B', '#80FF72', '#242325', '#30C5FF '];
 
 //   // Create pie chart data with custom colors
   let pieChart = {
