@@ -29,11 +29,8 @@ The geoJSON document we were using needed to be cleaned up to ensure the country
 - Bar Charts
     ADD TEXT HERE!!!
 
-## At least one paragraph summarizing efforts for ethical considerations made in the project
-We used reliable UN data, trusting they provided data that is free to use. We verified the data we produced on our app was accurately reflecting the UN data. 
-No PII was included in the data we collected, thereby ensuring privacy and security. Sources and references are accurately cited. 
-
-ADD MORE HERE!!!
+## Ethical considerations made in the project
+Throughout the duration of our project, ethical considerations were paramount in every step of the process. Our foundation rested on the utilization of reliable UN data, a trusted source known for its commitment to providing information freely accessible for public use. We meticulously cross-referenced and verified the data integrated into our application to ensure its accuracy and alignment with the original UN datasets. Moreover, privacy and security were non-negotiable aspects of our data collection strategy; no personally identifiable information (PII) was ever included in the data we gathered, safeguarding user privacy. In line with ethical standards, all sources and references utilized in our project were accurately cited, acknowledging the contributions of others and promoting transparency within our work. By prioritizing ethical practices, we aimed not only to deliver a robust and reliable solution but also to uphold the principles of integrity and responsibility in our project's execution.
 
 
 ## Sources
