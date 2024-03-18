@@ -18,19 +18,20 @@ The geoJSON document we were using needed to be cleaned up to ensure the country
 
 ## Instructions on how to use and interact with the project
 - Drop Down Menu 
-    ADD TEXT HERE!!!
+    The user will choose a year. The years 1950 - 2024 are available. 
 
 - Map
-    ADD TEXT HERE!!!
+    After a year is chosen in the drop down, the user will be able to select a country by clicking on it and the map will display the total average population life expectancy, the male population life expectancy,      and the female population life expectancy 
 
 - Pie Chart
-    ADD TEXT HERE!!!
+    After a year is chosen in the drop down, the user will be able to hover over the slice in the pie chart to see the total average population life expectancy per continent.  
 
 - Bar Charts
     ADD TEXT HERE!!!
 
 ## At least one paragraph summarizing efforts for ethical considerations made in the project
-We used reliable UN data trusting they provided ethical data. We verified the data we produced on our app was accurately reflecting the UN data. 
+We used reliable UN data, trusting they provided data that is free to use. We verified the data we produced on our app was accurately reflecting the UN data. 
+No PII was included in the data we collected, thereby ensuring privacy and security. Sources and references are accurately cited. 
 
 ADD MORE HERE!!!
 
