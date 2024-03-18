@@ -34,6 +34,8 @@ The geoJSON and the JSON file used for the visualizations were then uploaded int
 ## Ethical considerations made in the project
 Throughout the duration of our project, ethical considerations were paramount in every step of the process. Our foundation rested on the utilization of reliable UN data, a trusted source known for its commitment to providing information freely accessible for public use. We meticulously cross-referenced and verified the data integrated into our application to ensure its accuracy and alignment with the original UN datasets. Moreover, privacy and security were non-negotiable aspects of our data collection strategy; no personally identifiable information (PII) was ever included in the data we gathered, safeguarding user privacy. In line with ethical standards, all sources and references utilized in our project were accurately cited, acknowledging the contributions of others and promoting transparency within our work. By prioritizing ethical practices, we aimed not only to deliver a robust and reliable solution but also to uphold the principles of integrity and responsibility in our project's execution.
 
+## Presentation
+https://www.canva.com/design/DAF_h1QMOHs/kbZw7DPVhkk4E1IRu5EFXg/edit?utm_content=DAF_h1QMOHs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
 ## Sources
 https://data.un.org/Data.aspx?q=life+expectancy&d=PopDiv&f=variableID%3a68
