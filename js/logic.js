@@ -348,7 +348,7 @@ console.log(labels,values)
       type: 'pie',
       marker: { colors: customColors },
       textinfo: 'value',
-      texttemplate: '%{value:.2f}'
+      texttemplate: '%{value:.2f} yrs'
 
    };
 
