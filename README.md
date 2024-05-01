@@ -11,7 +11,7 @@ The purpose of the project is to be able to identify average life expectancies o
 
 ## Data
 Our dataset consists of 15 variables and 12,795 observations with TARGET, ResidualSugar, Chlorides, FreeSulfurDioxide, TotalSulfurDioxide, pH, Sulphates, Alcohol, and STARS variables containing several missing values. Lastly, LabelAppeal, AcidIndex, and STARS are discrete variables and the rest are continuous. As such we will perform the appropriate visualization in the following figures.
-![Alt text]([https://files.slack.com/files-pri/T060DDL5VS4-F0710D5Q4HW/screen_shot_2024-04-23_at_8.30.56_pm.png])
+!([https://files.slack.com/files-pri/T060DDL5VS4-F0710D5Q4HW/screen_shot_2024-04-23_at_8.30.56_pm.png])
 
 
 
